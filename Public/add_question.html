@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Add Question | Sketch & Solve</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body, * {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      box-sizing: border-box;
+    }
+    :root {
+      --primary: #3498db;
+      --light-bg: #f5f7fa;
+      --sidebar-width: 250px;
+    }
+    body {
+      display: flex;
+      background-color: var(--light-bg);
+    }
+    .sidebar {
+      width: var(--sidebar-width);
+      height: 100vh;
+      background: #fff;
+      box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+      position: fixed;
+    }
+    .sidebar-header {
+      padding: 20px;
+      text-align: center;
+      border-bottom: 1px solid #eee;
+    }
+    .sidebar-header h2 {
+      color: var(--primary);
+    }
+    .sidebar-nav a {
+      display: flex;
+      align-items: center;
+      padding: 15px 25px;
+      text-decoration: none;
+      color: #333;
+      transition: background 0.3s;
+    }
+    .sidebar-nav a i {
+      margin-right: 15px;
+    }
+    .sidebar-nav a:hover,
+    .sidebar-nav .active {
+      background-color: var(--primary);
+      color: #fff;
+    }
+    .main-content {
+      margin-left: var(--sidebar-width);
+      padding: 30px;
+      width: 100%;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+    .header h1 {
+      font-size: 24px;
+    }
+    .form-section {
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      max-width: 600px;
+    }
+    .form-section h2 {
+      margin-bottom: 20px;
+      color: var(--primary);
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+    }
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+    .form-group button {
+      background-color: var(--primary);
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .form-group button:hover {
+      background-color: #2980b9;
+    }
+  </style>
+</head>
+<body>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <h2>Sketch & Solve</h2>
+    </div>
+    <div class="sidebar-nav">
+      <a href="Staff.html">
+        <i class="fas fa-tachometer-alt"></i>
+        <span>Dashboard</span>
+      </a>
+      <a href="add_question.html" class="active">
+        <i class="fas fa-plus-circle"></i>
+        <span>Add Questions</span>
+      </a>
+      <a href="results.html">
+        <i class="fas fa-chart-bar"></i>
+        <span>View Student Results</span>
+      </a>
+      <a href="#">
+        <i class="fas fa-sign-out-alt"></i>
+        <span>Logout</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <div class="header">
+      <h1>Add New Doodle Question</h1>
+      <div class="profile-icon"><i class="fas fa-user-circle fa-2x" style="color:#3498db;"></i></div>
+    </div>
+
+    <div class="form-section">
+      <h2>Enter Question Details</h2>
+      <form id="questionForm">
+        <div class="form-group">
+          <label for="questionText">Question</label>
+          <input type="text" id="questionText" name="questionText" placeholder="e.g., Draw apple" required>
+        </div>
+        <div class="form-group">
+          <label for="category">Category</label>
+          <select id="category" name="category" required>
+            <option value="">-- Select Category --</option>
+            <option value="fruit">Fruit</option>
+            <option value="animal">Animal</option>
+            <option value="object">Object</option>
+            <option value="nature">Nature</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="expectedAnswer">Expected Answer</label>
+          <input type="text" id="expectedAnswer" name="expectedAnswer" placeholder="e.g., apple" pattern="^[a-zA-Z\s]+$" required>
+        </div>
+        <div class="form-group">
+          <button type="submit">Add Question</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- JS to handle form -->
+  <script>
+    document.getElementById("questionForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const question = document.getElementById("questionText").value;
+      const category = document.getElementById("category").value;
+      const expectedAnswer = document.getElementById("expectedAnswer").value;
+
+      fetch("/api/questions", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ question, category, expectedAnswer })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          alert("✅ Question added successfully!");
+          document.getElementById("questionForm").reset();
+        } else {
+          alert("❌ Failed to add question. Try again.");
+        }
+      })
+      .catch(err => {
+        console.error("Error:", err);
+        alert("An error occurred while adding the question.");
+      });
+    });
+  </script>
+</body>
+</html>

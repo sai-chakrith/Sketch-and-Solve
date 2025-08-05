@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Parent Portal</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <style>
+    .ann {
+      padding: 15px;
+      background-color: white;
+      border-radius: 10px;
+      margin-top: 15px;
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+      width: 300px;
+    }
+    .profile img {
+      border-radius: 50%;
+      object-fit: cover;
+    }
+  </style>
+  <script>
+    google.charts.load('current', { packages: ['corechart'] });
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+      const data = google.visualization.arrayToDataTable([
+        ['Date', 'Scores'],
+        ['20-04', 75],
+        ['20-05', 70],
+        ['20-06', 81],
+        ['20-07', 85],
+        ['20-08', 81],
+        ['20-09', 77],
+        ['20-10', 80],
+        ['20-11', 82],
+      ]);
+
+      const options = {
+        title: 'Exam Performance',
+        curveType: 'function',
+      };
+
+      const chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+      chart.draw(data, options);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const username = localStorage.getItem('username') || 'Guest';
+      document.getElementById('welcomeUser').textContent = `Welcome, ${username}`;
+    });
+
+    async function logout() {
+      try {
+        await fetch('/api/logout');
+        localStorage.removeItem('username');
+        window.location.href = 'index.html'; // Redirect to login page
+      } catch (err) {
+        console.error('Logout error:', err);
+        alert('Logout failed. Please try again.');
+      }
+    }
+  </script>
+</head>
+<body>
+  <div class="sidebar">
+    <div class="title"><i class="fas fa-paint-brush"></i><a href="Parents portal.html">Sketch & Solve</a></div>
+    <br />
+    <ul>
+      <li style="background-color: #0080ff;"><a href="Parents portal.html">Home</a></li><br />
+      <li><a href="PTeachers.html">Teachers</a></li><br />
+      <li><a href="Psubjects.html">Subjects</a></li><br />
+      <li><a href="Presults.html">Results</a></li><br />
+      <li><a href="Pattendance.html">Attendance</a></li><br />
+      <li><a href="Pannouncements.html">Announcements</a></li><br />
+      <li style="background-color: #ff3246;"><a href="#" onclick="logout()">Logout</a></li><br />
+    </ul>
+  </div>
+
+  <div class="main-content">
+    <div class="header">
+      <div><b id="welcomeUser">Welcome, User</b></div>
+      <div class="profile">
+        <img src="user.jpg" alt="User Profile" height="50px" width="50px" />
+      </div>
+    </div>
+
+    <br /><br />
+    <div style="display: flex;">
+      <div id="curve_chart" style="width: 900px; height: 500px;"></div>
+      <div>
+        <div class="calender">
+          <table>
+            <tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr>
+            <tr><td></td><td></td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr>
+            <tr><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td><td>11</td><td>12</td></tr>
+            <tr><td>13</td><td>14</td><td>15</td><td>16</td><td>17</td><td>18</td><td>19</td></tr>
+            <tr><td>20</td><td>21</td><td>22</td><td>23</td><td>24</td><td>25</td><td>26</td></tr>
+            <tr><td>27</td><td>28</td><td>29</td><td>30</td><td>31</td><td></td><td></td></tr>
+          </table>
+        </div>
+
+        <br />
+        <div class="ann">
+          <h3 style="text-align: center; color: rgb(0, 179, 255);">Announcements</h3>
+          <p>Stay tuned for updates from teachers</p>
+          <hr style="border: dashed;" />
+          <p>Upcoming parent meeting - March 20</p>
+          <hr style="border: dashed;" />
+          <p>Annual Day Function scheduled for April 5</p>
+          <hr style="border: dashed;" />
+          <p>New lesson uploads in Math and Science</p>
+          <hr style="border: dashed;" />
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

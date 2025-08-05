@@ -1,0 +1,54 @@
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>B1 Hangman</title>
+    <link rel="stylesheet" href="HangCSS.css">
+</head>
+<body>
+
+    <div class="container">
+        <header><div class="title">B1 hangman</div></header>
+        <a href="Students portal.html">Home</a>
+        <!-- Hangman Drawing -->
+        <div id="hangman-drawing" class="hangman-drawing">
+            <!-- Base scaffold -->
+            <div class="scaffold-base"></div>
+            <div class="scaffold-vertical"></div>
+            <div class="scaffold-horizontal"></div>
+            <div class="scaffold-rope"></div>
+            
+            <!-- Body parts (initially hidden) -->
+            <div id="head" class="body-part head"></div>
+            <div id="body" class="body-part body"></div>
+            <div id="right-arm" class="body-part right-arm"></div>
+            <div id="left-arm" class="body-part left-arm"></div>
+            <div id="right-leg" class="body-part right-leg"></div>
+            <div id="left-leg" class="body-part left-leg"></div>
+        </div>
+        
+        <!-- Hint Feature -->
+        <div class="hint-container">
+            <button id="hint-button" class="hint-button">Get Hint</button>
+            <div id="hint-display" class="hint-display"></div>
+        </div>
+        
+        <!-- Word Display -->
+        <div id="hangman-word" class="hangman-word"></div>
+        
+        <!-- Keyboard -->
+        <div id="keyboard" class="keyboard"></div>
+    </div>
+
+    <script src="HangJS.js"></script>
+    <!-- Add this before the closing body tag -->
+    <div class="result-popup" id="result-popup">
+    <div class="result-content">
+        <div class="result-title" id="result-title"></div>
+        <div class="result-message" id="result-message"></div>
+        <button class="play-again-btn" id="play-again-btn">Play Again</button>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Draw</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="draw.css">
+</head>
+<body>
+  <div class="app-container">
+    <div class="header">
+      <div class="logo">
+        <i class="fas fa-paint-brush"></i> <a href="students portal.html">Sketch and Solve</a>
+      </div>
+      <div class="user-info"><span id="user-name"></span></div>
+    </div>
+    
+    <div class="main-content">
+      <div class="left-panel">
+        <div class="question-container">
+          <h2>Your Challenge</h2>
+          <div id="question-box" data-id="QUESTION_OBJECT_ID">
+            <p id="question">Loading question...</p>
+          </div>
+        </div>
+        
+        <div class="button-container">
+          <button id="clear-btn"><i class="fas fa-trash-alt"></i> Clear</button>
+          <button id="submit-btn"><i class="fas fa-paper-plane"></i> Submit</button>
+        </div>
+      </div>
+      
+      <div class="drawing-section">
+        <div class="canvas-container">
+          <canvas id="draw-area"></canvas>
+          <div class="tools">
+            <div class="tool-group">
+              <button id="pen-btn" class="tool-btn active" title="Pen"><i class="fas fa-pen"></i></button>
+              <button id="eraser-btn" class="tool-btn" title="Eraser"><i class="fas fa-eraser"></i></button>
+            </div>
+            <div class="size-slider">
+              <input type="range" id="size-slider" min="1" max="20" value="5">
+              <span>Size</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div id="notification" class="notification">
+      <div class="notification-content">
+        <i class="fas fa-check-circle"></i>
+        <span id="notification-message">Drawing submitted successfully!</span>
+      </div>
+    </div>
+  </div>
+  <p id="resultText" style="font-weight: bold;"></p>
+
+  <script src="draw.js"></script>
+</body>
+</html>

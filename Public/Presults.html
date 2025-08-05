@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Student Drawing Results - Parent View</title>
+  <link rel="stylesheet" href="styles.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body, * {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      background-color: #f5f7fa;
+    }
+
+    .sidebar {
+      width: 250px;
+      background-color: #fff;
+      height: 100vh;
+      position: fixed;
+      box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    }
+
+    .sidebar .title {
+      padding: 20px;
+      font-size: 20px;
+      text-align: center;
+      font-weight: bold;
+      color: #3498db;
+      border-bottom: 1px solid #eee;
+    }
+
+    .sidebar .title i {
+      margin-right: 10px;
+    }
+
+    .sidebar ul {
+      padding: 0;
+      list-style: none;
+    }
+
+    .sidebar ul li {
+      padding: 10px 25px;
+    }
+
+    .sidebar ul li a {
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+      display: block;
+    }
+
+    .main-content {
+      margin-left: 250px;
+      padding: 30px;
+      width: 100%;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header b {
+      font-size: 20px;
+      color: #3498db;
+    }
+
+    .profile img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    h2 {
+      margin-top: 30px;
+      color: #0080ff;
+      text-align: center;
+    }
+
+    #filter {
+      margin: 20px auto;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    select {
+      padding: 8px 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      background-color: #fff;
+    }
+
+    th, td {
+      padding: 12px;
+      border: 1px solid #ddd;
+      text-align: center;
+    }
+
+    th {
+      background-color: #0080ff;
+      color: white;
+    }
+
+    td {
+      background-color: #e2f8ff;
+    }
+
+    td:hover {
+      background-color: #00a8ff;
+      color: white;
+    }
+
+    img {
+      max-width: 100px;
+      height: auto;
+    }
+
+    #no-results {
+      text-align: center;
+      color: gray;
+      margin-top: 20px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="title"><i class="fas fa-paint-brush"></i><a href="Parents portal.html">Sketch & Solve</a></div>
+    <ul>
+      <li style="background-color: #0080ff;"><a href="Parents portal.html">Home</a></li><br />
+      <li><a href="PTeachers.html">Teachers</a></li><br />
+      <li><a href="Psubjects.html">Subjects</a></li><br />
+      <li><a href="Presults.html">Results</a></li><br />
+      <li><a href="Pattendance.html">Attendance</a></li><br />
+      <li><a href="Pannouncements.html">Announcements</a></li><br />
+      <li style="background-color: #ff3246;"><a href="#" onclick="logout()">Logout</a></li><br />
+    </ul>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <div class="header">
+      <div><b id="welcomeUser">Welcome, Parent</b></div>
+      <div class="profile">
+        <img src="resources/user.jpg" alt="User" />
+      </div>
+    </div>
+
+    <h2>All Student Drawing Results</h2>
+
+    <div id="filter">
+      <label for="studentSelect">Filter by student:</label>
+      <select id="studentSelect">
+        <option value="all">All</option>
+      </select>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Student</th>
+          <th>Question</th>
+          <th>Caption</th>
+          <th>Correct</th>
+          <th>Image</th>
+          <th>Timestamp</th>
+        </tr>
+      </thead>
+      <tbody id="resultsTable">
+        <tr><td colspan="6">Loading...</td></tr>
+      </tbody>
+    </table>
+
+    <p id="no-results">No results found.</p>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const name = localStorage.getItem('username') || 'Parent';
+      document.getElementById('welcomeUser').textContent = `Welcome, ${name}`;
+    });
+
+    async function logout() {
+      await fetch('/api/logout');
+      localStorage.removeItem('username');
+      localStorage.removeItem('email');
+      window.location.href = 'index.html';
+    }
+
+    async function loadResults() {
+      const response = await fetch('/api/results');
+      const data = await response.json();
+      const table = document.getElementById('resultsTable');
+      const studentSelect = document.getElementById('studentSelect');
+      const students = new Set();
+      table.innerHTML = '';
+
+      if (data.success && data.results.length > 0) {
+        document.getElementById('no-results').style.display = 'none';
+        data.results.forEach(result => {
+          students.add(result.username);
+          const row = document.createElement('tr');
+          row.dataset.user = result.username;
+          row.innerHTML = `
+            <td>${result.username}</td>
+            <td>${result.question}</td>
+            <td>${result.caption}</td>
+            <td>${result.correct ? '✅' : '❌'}</td>
+            <td><img src="data:image/png;base64,${result.imageData}" alt="Drawing"></td>
+            <td>${new Date(result.createdAt).toLocaleString()}</td>
+          `;
+          table.appendChild(row);
+        });
+
+        students.forEach(name => {
+          const option = document.createElement('option');
+          option.value = name;
+          option.textContent = name;
+          studentSelect.appendChild(option);
+        });
+      } else {
+        document.getElementById('no-results').style.display = 'block';
+      }
+    }
+
+    document.getElementById('studentSelect').addEventListener('change', (e) => {
+      const selected = e.target.value;
+      document.querySelectorAll('#resultsTable tr').forEach(row => {
+        if (selected === 'all' || row.dataset.user === selected) {
+          row.style.display = '';
+        } else {
+          row.style.display = 'none';
+        }
+      });
+    });
+
+    loadResults();
+  </script>
+</body>
+</html>

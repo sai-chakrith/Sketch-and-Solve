@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parent Announcements</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body, * {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      background-color: #f5f7fa;
+    }
+
+    .sidebar {
+      width: 250px;
+      background: #fff;
+      height: 100vh;
+      position: fixed;
+      box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    }
+
+    .sidebar .title {
+      padding: 20px;
+      font-size: 20px;
+      text-align: center;
+      font-weight: bold;
+      color: #3498db;
+      border-bottom: 1px solid #eee;
+    }
+
+    .sidebar .title i {
+      margin-right: 10px;
+    }
+
+    .sidebar ul {
+      padding: 0;
+      list-style: none;
+    }
+
+    .sidebar ul li {
+      padding: 10px 25px;
+    }
+
+    .sidebar ul li a {
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+      display: block;
+    }
+
+    .main-content {
+      margin-left: 250px;
+      padding: 30px;
+      width: 100%;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header b {
+      font-size: 20px;
+      color: #3498db;
+    }
+
+    .profile img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .content h2 {
+      margin-top: 30px;
+      color: #0080ff;
+    }
+
+    .announcement-card {
+      background: white;
+      padding: 15px;
+      margin: 15px 0;
+      border-radius: 8px;
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .announcement-card h3 {
+      margin: 0;
+      color: #333;
+    }
+
+    .announcement-card p {
+      margin: 5px 0;
+      color: #555;
+    }
+
+    .announcement-card .date {
+      font-size: 12px;
+      color: #777;
+      display: block;
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="title"><i class="fas fa-paint-brush"></i><a href="Parents portal.html">Sketch & Solve</a></div>
+    <ul>
+      <li><a href="Parents portal.html">Home</a></li><br>
+      <li><a href="PTeachers.html">Teachers</a></li><br>
+      <li><a href="Psubjects.html">Subjects</a></li><br>
+      <li><a href="Presults.html">Results</a></li><br>
+      <li><a href="Pattendance.html">Attendance</a></li><br>
+      <li style="background-color: #0080ff;"><a href="Pannouncements.html">Announcements</a></li><br>
+      <li style="background-color: #ff3246;"><a href="#" onclick="logout()">Logout</a></li><br>
+    </ul>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <div class="header">
+      <div><b id="welcomeUser">Welcome, Parent</b></div>
+      <div class="profile">
+        <img src="resources/user.jpg" alt="User profile picture">
+      </div>
+    </div>
+
+    <div class="content">
+      <h2>Latest Announcements</h2>
+      <div id="announcementsList"></div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const username = localStorage.getItem("username") || "Parent";
+      document.getElementById("welcomeUser").textContent = `Welcome, ${username}`;
+      loadAnnouncements();
+    });
+
+    async function loadAnnouncements() {
+      try {
+        const res = await fetch('/api/announcements');
+        const data = await res.json();
+        const container = document.getElementById("announcementsList");
+        container.innerHTML = '';
+
+        if (data.success && data.announcements.length > 0) {
+          data.announcements.forEach(a => {
+            const card = document.createElement("div");
+            card.className = "announcement-card";
+            card.innerHTML = `
+              <h3>${a.title}</h3>
+              <p>${a.message}</p>
+              <span class="date">Posted on: ${new Date(a.createdAt).toLocaleString()}</span>
+            `;
+            container.appendChild(card);
+          });
+        } else {
+          container.innerHTML = "<p>No announcements available.</p>";
+        }
+      } catch (err) {
+        console.error("Failed to fetch announcements:", err);
+        document.getElementById("announcementsList").innerHTML = "<p>Error loading announcements.</p>";
+      }
+    }
+
+    async function logout() {
+      try {
+        await fetch('/api/logout');
+        localStorage.removeItem('username');
+        window.location.href = 'index.html';
+      } catch (err) {
+        alert("Logout failed. Try again.");
+      }
+    }
+  </script>
+</body>
+</html>

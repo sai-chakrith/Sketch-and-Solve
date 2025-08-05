@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TeacherPage</title>
+    <link rel="stylesheet" href="teacherStyle.css">
+</head>
+<body>
+    
+    <header>
+        <h2 class="logo">Logo</h2>
+        <nav class="navigation">
+            <a href="#">Home</a>
+            <a href="#">About</a>
+            <a href="#">Service</a>
+            <a href="#">Contact</a>
+            <button class="btnlogin-popup">Login</button>
+            <button class="btnlogout" style="display: none;">Logout</button>
+        </nav>
+    </header>
+
+    <div class="wrapper">
+        <span class="icon-close">
+            <ion-icon name="close-outline"></ion-icon>
+        </span>
+
+        <div class="from-box login">
+            <h2>Login</h2>
+            <form id="loginForm">
+                <div class="input-box">
+                    <span class="icon"><ion-icon name="mail"></ion-icon></span>
+                    <input type="email" id="loginEmail" required>
+                    <label for="loginEmail">Email</label>
+                </div>
+                <div class="input-box">
+                    <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
+                    <input type="password" id="loginPassword" required>
+                    <label for="loginPassword">Password</label>
+                </div>
+                <div class="remember-forgot">
+                    <label><input type="checkbox" id="rememberMe">Remember me</label>
+                    <a href="#">Forgot Password</a>
+                </div>
+                <button type="submit" class="btn">Login</button>
+                <div class="login-register">
+                    <p>Don't have an Account? <a href="#" class="register-link">Register</a></p>
+                </div>
+                <div class="error-message" id="loginError"></div>
+            </form>
+        </div>
+
+        <div class="from-box register">
+            <h2>Registration</h2>
+            <form id="registerForm">
+                <div class="input-box">
+                    <span class="icon"><ion-icon name="people-outline"></ion-icon></span>
+                    <input type="text" id="registerUsername" required>
+                    <label for="registerUsername">Username</label>
+                </div>
+                <div class="input-box">
+                    <span class="icon"><ion-icon name="mail-outline"></ion-icon></span>
+                    <input type="email" id="registerEmail" required>
+                    <label for="registerEmail">Email</label>
+                </div>
+                <div class="input-box">
+                    <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
+                    <input type="password" id="registerPassword" required>
+                    <label for="registerPassword">Password</label>
+                </div>
+                <div class="remember-forgot">
+                    <label><input type="checkbox" id="agreeTerms" required>I agree to the terms & condition </label>                   
+                </div>
+                <button type="submit" class="btn">Register</button>
+                <div class="login-register">
+                    <p>Already have an Account? <a href="#" class="login-link">Login</a></p>
+                </div>
+                <div class="error-message" id="registerError"></div>
+            </form>
+        </div>
+    </div>
+
+    <script src="teacherJS.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

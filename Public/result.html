@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Results | Sketch & Solve</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body, * {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      box-sizing: border-box;
+    }
+    :root {
+      --primary: #3498db;
+      --light-bg: #f0f2f5;
+      --sidebar-width: 250px;
+    }
+    body {
+      display: flex;
+      background-color: var(--light-bg);
+    }
+    .sidebar {
+      width: var(--sidebar-width);
+      height: 100vh;
+      background: #fff;
+      box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+      position: fixed;
+    }
+    .sidebar-header {
+      padding: 20px;
+      text-align: center;
+      border-bottom: 1px solid #eee;
+    }
+    .sidebar-header h2 {
+      color: var(--primary);
+    }
+    .sidebar-nav a {
+      display: flex;
+      align-items: center;
+      padding: 15px 25px;
+      text-decoration: none;
+      color: #333;
+      transition: background 0.3s;
+    }
+    .sidebar-nav a i {
+      margin-right: 15px;
+    }
+    .sidebar-nav a:hover,
+    .sidebar-nav .active {
+      background-color: var(--primary);
+      color: #fff;
+    }
+    .main-content {
+      margin-left: var(--sidebar-width);
+      padding: 30px;
+      width: 100%;
+    }
+    h1 {
+      text-align: center;
+      color: #3498db;
+      margin-bottom: 20px;
+    }
+    #filter {
+      margin: 20px auto;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+    select {
+      padding: 8px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      margin-top: 20px;
+    }
+    th, td {
+      padding: 12px;
+      border: 1px solid #ddd;
+      text-align: center;
+    }
+    th {
+      background-color: #3498db;
+      color: white;
+    }
+    img {
+      max-width: 100px;
+      height: auto;
+    }
+    #no-results {
+      text-align: center;
+      color: gray;
+      margin-top: 20px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <h2>Sketch & Solve</h2>
+    </div>
+    <div class="sidebar-nav">
+      <a href="Staff.html">
+        <i class="fas fa-tachometer-alt"></i>
+        <span>Dashboard</span>
+      </a>
+      <a href="add_question.html">
+        <i class="fas fa-plus-circle"></i>
+        <span>Add Questions</span>
+      </a>
+      <a href="results.html" class="active">
+        <i class="fas fa-chart-bar"></i>
+        <span>View Results</span>
+      </a>
+      <a href="#">
+        <i class="fas fa-sign-out-alt"></i>
+        <span>Logout</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <h1>All Student Drawing Results</h1>
+
+    <div id="filter">
+      <label for="studentSelect">Filter by student:</label>
+      <select id="studentSelect">
+        <option value="all">All</option>
+      </select>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Student</th>
+          <th>Question</th>
+          <th>Caption</th>
+          <th>Correct</th>
+          <th>Image</th>
+          <th>Timestamp</th>
+        </tr>
+      </thead>
+      <tbody id="resultsTable">
+        <tr><td colspan="6">Loading...</td></tr>
+      </tbody>
+    </table>
+    <p id="no-results">No results found.</p>
+  </div>
+
+  <script>
+    async function loadResults() {
+      const response = await fetch('/api/results');
+      const data = await response.json();
+      const table = document.getElementById('resultsTable');
+      const studentSelect = document.getElementById('studentSelect');
+      const students = new Set();
+      table.innerHTML = '';
+
+      if (data.success && data.results.length > 0) {
+        document.getElementById('no-results').style.display = 'none';
+        data.results.forEach(result => {
+          students.add(result.username);
+          const row = document.createElement('tr');
+          row.dataset.user = result.username;
+          row.innerHTML = `
+            <td>${result.username}</td>
+            <td>${result.question}</td>
+            <td>${result.caption}</td>
+            <td>${result.correct ? '✅' : '❌'}</td>
+            <td><img src="data:image/png;base64,${result.imageData}" alt="Drawing"></td>
+            <td>${new Date(result.createdAt).toLocaleString()}</td>
+          `;
+          table.appendChild(row);
+        });
+
+        students.forEach(name => {
+          if (!document.querySelector(`#studentSelect option[value="${name}"]`)) {
+            const option = document.createElement('option');
+            option.value = name;
+            option.textContent = name;
+            studentSelect.appendChild(option);
+          }
+        });
+      } else {
+        document.getElementById('no-results').style.display = 'block';
+      }
+    }
+
+    document.getElementById('studentSelect').addEventListener('change', (e) => {
+      const selected = e.target.value;
+      document.querySelectorAll('#resultsTable tr').forEach(row => {
+        if (selected === 'all' || row.dataset.user === selected) {
+          row.style.display = '';
+        } else {
+          row.style.display = 'none';
+        }
+      });
+    });
+
+    loadResults();
+  </script>
+</body>
+</html>

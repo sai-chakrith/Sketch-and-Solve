@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Announcements | Sketch & Solve</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      background-color: #f5f7fa;
+    }
+
+    .sidebar {
+      width: 250px;
+      background: white;
+      height: 100vh;
+      box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+      position: fixed;
+    }
+
+    .sidebar .title {
+      padding: 20px;
+      font-size: 20px;
+      text-align: center;
+      background-color: #3498db;
+      color: white;
+      font-weight: bold;
+    }
+
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .sidebar ul li {
+      padding: 15px 25px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .sidebar ul li a {
+      text-decoration: none;
+      color: #333;
+      display: block;
+    }
+
+    .sidebar ul li:hover,
+    .sidebar ul li[style*="background-color: #0080ff;"] {
+      background-color: #3498db;
+    }
+
+    .sidebar ul li:hover a,
+    .sidebar ul li[style*="background-color: #0080ff;"] a {
+      color: white;
+    }
+
+    .main-content {
+      margin-left: 250px;
+      padding: 30px;
+      width: 100%;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .announcement-card {
+      background: white;
+      padding: 20px;
+      margin: 15px 0;
+      border-radius: 8px;
+      box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .announcement-card h3 {
+      margin: 0 0 10px;
+      color: #3498db;
+    }
+
+    .announcement-card p {
+      color: #333;
+    }
+
+    .announcement-card .date {
+      font-size: 12px;
+      color: #777;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <div class="title"><i class="fas fa-paint-brush"></i> Sketch & Solve</div>
+    <ul>
+      <li><a href="students portal.html">Home</a></li>
+      <li><a href="teachers.html">Teachers</a></li>
+      <li><a href="subjects.html">Subjects</a></li>
+      <li><a href="drawPage.html">Draw</a></li>
+      <li><a href="Hangman.html">GAME</a></li><br>
+      <li><a href="results.html">Results</a></li>
+      <li><a href="attendance.html">Attendance</a></li>
+      <li style="background-color: #0080ff;"><a href="announcemets.html">Announcements</a></li>
+      <li style="background-color: #ff3246;"><a href="logout.html">Logout</a></li>
+    </ul>
+  </div>
+
+  <div class="main-content">
+    <div class="header">
+      <h2>Latest Announcements</h2>
+      <div class="profile">
+        <img src="resources/user.jpg" alt="User" height="50px" width="50px">
+      </div>
+    </div>
+
+    <div id="announcementsList">
+      <p>Loading announcements...</p>
+    </div>
+  </div>
+
+  <script>
+    async function loadAnnouncements() {
+      try {
+        const res = await fetch('/api/announcements');
+        const data = await res.json();
+        const container = document.getElementById("announcementsList");
+        container.innerHTML = '';
+
+        if (data.success && data.announcements.length > 0) {
+          data.announcements.forEach(a => {
+            const card = document.createElement('div');
+            card.className = 'announcement-card';
+            card.innerHTML = `
+              <h3>${a.title}</h3>
+              <p>${a.message}</p>
+              <div class="date">Posted on: ${new Date(a.createdAt).toLocaleString()}</div>
+            `;
+            container.appendChild(card);
+          });
+        } else {
+          container.innerHTML = '<p>No announcements available.</p>';
+        }
+      } catch (err) {
+        console.error("Failed to fetch announcements:", err);
+        document.getElementById("announcementsList").innerHTML = "<p>Failed to load announcements.</p>";
+      }
+    }
+
+    loadAnnouncements();
+  </script>
+</body>
+</html>
