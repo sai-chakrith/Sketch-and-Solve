@@ -1,0 +1,124 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    display: flex;
+  }
+  .sidebar {
+    width: 250px;
+    background: #f5f5f5;
+    padding: 20px;
+    height: 100vh;
+  }
+  .sidebar ul {
+    list-style: none;
+    padding: 0;
+
+  }
+  .sidebar li {
+    font-size: large;
+    padding: 15px;
+    cursor: pointer;
+    border-radius: 20px;
+  }
+  .sidebar li:hover {
+    background: #0080ff;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+    transform: translateY(-5px);
+  }
+
+  .sidebar a{
+    position: relative;
+    font-size: 1.1em;
+    color: #3A3A3A;
+    text-decoration: none;
+    margin-left: 40px;
+    font-weight: 500;
+  }
+
+  .main-content {
+    flex: 1;
+    padding: 20px;
+    background: #f9f9f9;
+  }
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  .profile img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid #005eff;
+}
+  
+
+  .title{
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    border-radius: 15px;
+    background-color: #0080ff;
+    border-color: antiquewhite;
+    box-shadow: #fffacd;
+    padding: 15px;
+    color: white;
+    text-align: center;
+  }
+
+  .calender{
+    max-width: 600px;
+    font-family: serif;
+    font-weight: bold;
+    color: antiquewhite;
+    border: solid 5px black;
+    border-radius: 25px;
+
+}
+
+table, th, td{
+    width: 100%;
+    table-layout: fixed;
+    text-align: center;
+    font-size: 15px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+table{
+  background-color: rgb(185, 219, 249);
+  border-radius: 20px;
+}
+th, td{
+    padding: 25px;
+    border-radius: 100%;;
+}
+td:hover {
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+  transform: translateY(-5px);
+}
+th{
+    background: rgb(1, 142, 203);
+    color: white;
+    font-family: arial black;
+}
+td{
+    background: rgb(226, 248, 255); 
+    color: black;
+}
+td:hover{
+    background: rgb(0, 140, 255);
+    color: white;
+}
+
+.ann{
+  border-radius: 15px;
+  background-color: #fff; 
+  border: 3px solid black;
+  padding-left: 25px;
+  padding-right: 25px;
+  padding-bottom: 20px;
+}

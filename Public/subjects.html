@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subjects</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+    .container {
+        padding: 20px;
+    }
+    
+    h2 {
+        font-size: 28px;
+        margin-bottom: 20px;
+    }
+    
+    .subjects-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        max-width: 900px;
+        margin: auto;
+    }
+    
+    .subject-card {
+        background-color: white;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        transition: transform 0.2s ease-in-out;
+    }
+    .icon {
+        width: 80px;
+        height: 80px;
+        margin: auto;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 30px;
+        color: white;
+        margin-bottom: 10px;
+    }
+    
+    p {
+        font-size: 16px;
+        font-weight: bold;
+        color: #333;
+    }
+</style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="title"><i class="fas fa-paint-brush"></i><a href="Students portal.html">Sketch & Solve</a></div>
+        
+        <br>
+        <ul>
+            <li><a href="Students portal.html">Home</a></li><br>
+            <li><a href="teachers.html">Teachers</a></li><br>
+            <li style="background-color: #0080ff;"><a href="subjects.html">Subjects</a></li><br>
+            <li><a href="drawPage.html">Draw</a></li><br>
+            <li><a href="Hangman.html">GAME</a></li><br>
+            <li><a href="results.html">Results</a></li><br>
+            <li><a href="attendance.html">Attendance</a></li><br>
+            <li><a href="announcements.html">Announcements</a></li><br>
+            <li style="background-color: #ff3246;"><a href="logout.html">Logout</a></li><br>
+        </ul>
+    </div>
+        <div class="main-content">
+            <div class="header">
+                <div><b>Welcome user 123</b></div>
+                <div class="profile">
+                <img src="resources/user.jpg" alt="User profile picture" height="50px" width="50px">
+                </div>
+            </div>
+    <div class="container">
+        <h2>Subjects</h2>
+        <div class="subjects-grid">
+            <div class="subject-card">
+                <div class="icon" style="background-color: #f4a261;"><i class="fas fa-atom"></i></div>
+                <p>Physics</p>
+            </div>
+            <div class="subject-card">
+                <div class="icon" style="background-color: #e76f51;"><i class="fas fa-flask"></i></div>
+                <p>Chemistry</p>
+            </div>
+            <div class="subject-card">
+                <div class="icon" style="background-color: #4ea8de;"><i class="fas fa-calculator"></i></div>
+                <p>Maths</p>
+            </div>
+            <div class="subject-card">
+                <div class="icon" style="background-color: #8bc34a;"><i class="fas fa-dna"></i></div>
+                <p>Biology</p>
+            </div>
+            <div class="subject-card">
+                <div class="icon" style="background-color: #ffab40;"><i class="fas fa-font"></i></div>
+                <p>English</p>
+            </div>
+            <div class="subject-card">
+                <div class="icon" style="background-color: #2e7d32;"><i class="fas fa-coins"></i></div>
+                <p>Economics</p>
+            </div>
+            <div class="subject-card">
+                <div class="icon" style="background-color: #d81b60;"><i class="fas fa-mountain"></i></div>
+                <p>History</p>
+            </div>
+            <div class="subject-card">
+                <div class="icon" style="background-color: #5e35b1;"><i class="fas fa-atom"></i></div>
+                <p>Science</p>
+            </div>
+            <div class="subject-card">
+                <div class="icon" style="background-color: #0097a7;"><i class="fas fa-balance-scale"></i></div>
+                <p>Civics</p>
+            </div>
+            <div class="subject-card">
+                <div class="icon" style="background-color: #ff7043;"><i class="fas fa-globe"></i></div>
+                <p>Geography</p>
+            </div>
+            <div class="subject-card">
+                <div class="icon" style="background-color: #00796b;"><i class="fas fa-landmark"></i></div>
+                <p>Political Science</p>
+            </div>
+            <div class="subject-card">
+                <div class="icon" style="background-color: #388e3c;"><i class="fas fa-seedling"></i></div>
+                <p>EVS</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
