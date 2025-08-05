@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teachers portal</title>
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+  google.charts.load("current", {packages:["corechart"]});
+  google.charts.setOnLoadCallback(drawChart);
+  function drawChart() {
+    var data = google.visualization.arrayToDataTable([
+    ['Date', 'Scores'],
+        ['student 1', 75],
+        ['student 2', 70],
+        ['student 3', 51],
+        ['student 4', 55],
+        ['student 5', 61],
+        ['student 6', 67],
+        ['student 7', 80],
+        ['student 8', 82],
+        ['student 9', 93],
+        ['student 10', 70],
+        ['student 11', 73],
+        ['student 12', 79],
+        ['student 13', 81],
+        ['student 14', 82],
+        ['student 15', 78],
+        ['student 16', 77],
+        ['student 17', 83],
+        ['student 18', 69],
+        ['student 19', 74],
+        ['student 20', 74],
+        ['student 21', 80],
+        ['student 22', 59],
+        ['student 23', 84],
+        ['student 24', 51],
+        ['student 25', 67],
+        ['student 26', 67],
+        ['student 27', 92],
+        ['student 28', 78],
+        ['student 29', 81],
+        ['student 30', 76],
+        ]);
+
+    var options = {
+      title: 'Exam Results',
+      legend: { position: 'none' },
+    };
+
+    var chart = new google.visualization.Histogram(document.getElementById('chart_div'));
+    chart.draw(data, options);
+  }
+</script>
+</head>
+
+<body>
+<div class="sidebar">
+  <div class="title"><i class="fas fa-paint-brush"></i><a href="Teachers portal.html">Sketch & Solve</a></div>
+    
+    <br>
+    <ul>
+    <li><a href="Teachers portal.html">Home</a> </li><br>
+    <li><a href="parents.html">Parents</a></li><br>
+    <li><a href="Students list.html">Students</a></li><br>
+    <li><a href="exams.html">Exams</a></li><br>
+    <li><a href="evaluvation.html">Evaluation</a></li><br>
+    <li><a href="lessons.html">Lessons</a></li><br>
+    <li><a href="attendence.html">Attendance</a></li><br>
+    <li><a href="announcemets.html">Announcements</a></li><br>
+    <li style="background-color: #ff3246;"><a href="logout.html">Logout</a></li><br>
+    </ul>
+</div>
+<div class="main-content">
+    <div class="header">
+        <div><b>Welcome user 123</b></div>
+        <div class="profile">
+        <img src="resources/user.jpg" alt="User profile picture" height="50px" width="50px">
+        </div>
+    </div>
+    <br><br>
+    <div style="display: flex";>
+        <div id="chart_div" style="width: 900px; height: 500px;"></div>
+        <div>
+            <div class="calender">
+            <table>
+                        <tr>
+                                    <th>Sun</th>
+                                    <th>Mon</th>
+                                    <th>The</th>
+                                    <th>Wed</th>
+                                    <th>Thu</th>
+                                    <th>Fri</th>
+                                    <th>Sat</th>
+                        </tr>
+                        <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td>1</td>
+                                    <td>2</td>
+                                    <td>3</td>
+                                    <td>4</td>
+                                    <td>5</td>
+                        </tr>
+                        <tr>
+                                    <td>6</td>
+                                    <td>7</td>
+                                    <td>8</td>
+                                    <td>9</td>
+                                    <td>10</td>
+                                    <td>11</td>
+                                    <td>12</td>
+                        </tr>
+                        <tr>
+                                    <td>13</td>
+                                    <td>14</td>
+                                    <td>15</td>
+                                    <td>16</td>
+                                    <td>17</td>
+                                    <td>18</td>
+                                    <td>19</td>
+                        </tr>
+                        <tr>
+                                    <td>20</td>
+                                    <td>21</td>
+                                    <td>22</td>
+                                    <td>23</td>
+                                    <td>24</td>
+                                    <td>25</td>
+                                    <td>26</td>
+                        </tr>
+                        <tr>
+                                    <td>27</td>
+                                    <td>28</td>
+                                    <td>29</td>
+                                    <td>30</td>
+                                    <td>31</td>
+                                    <td></td>
+                                    <td></td>
+                        </tr>
+            </table>
+        </div>
+        <br>
+        <div class="ann">
+            <h3 style="text-align: center;color: rgb(0, 179, 255);">Announcemets</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
+            <hr style="border: dashed;">
+            <p>Lorem ipsum dolor sit amet</p>
+            <hr style="border: dashed;">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
+            <hr style="border: dashed;">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
+            <hr style="border: dashed;">
+        </div>
+</div>
+</div>
+
+</body>
+</html>
